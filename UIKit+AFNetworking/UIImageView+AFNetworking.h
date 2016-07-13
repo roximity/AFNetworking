@@ -1,5 +1,6 @@
 // UIImageView+AFNetworking.h
-// Copyright (c) 2011–2015 Alamofire Software Foundation (http://alamofire.org/)
+//
+// Copyright (c) 2013-2015 AFNetworking (http://afnetworking.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +27,6 @@
 #if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
 
 #import <UIKit/UIKit.h>
-
-NS_ASSUME_NONNULL_BEGIN
 
 @protocol AFURLResponseSerialization, AFImageCache;
 
@@ -89,7 +88,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param placeholderImage The image to be set initially, until the image request finishes. If `nil`, the image view will not change its image until the image request finishes.
  */
 - (void)setImageWithURL:(NSURL *)url
-       placeholderImage:(nullable UIImage *)placeholderImage;
+       placeholderImage:(UIImage *)placeholderImage;
 
 /**
  Asynchronously downloads an image from the specified URL request, and sets it once the request is finished. Any previous image request for the receiver will be cancelled.
@@ -100,13 +99,13 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param urlRequest The URL request used for the image request.
  @param placeholderImage The image to be set initially, until the image request finishes. If `nil`, the image view will not change its image until the image request finishes.
- @param success A block to be executed when the image request operation finishes successfully. This block has no return value and takes three arguments: the request sent from the client, the response received from the server, and the image created from the response data of request. If the image was returned from cache, the response parameter will be `nil`.
+ @param success A block to be executed when the image request operation finishes successfully. This block has no return value and takes three arguments: the request sent from the client, the response received from the server, and the image created from the response data of request. If the image was returned from cache, the request and response parameters will be `nil`.
  @param failure A block object to be executed when the image request operation finishes unsuccessfully, or that finishes successfully. This block has no return value and takes three arguments: the request sent from the client, the response received from the server, and the error object describing the network or parsing error that occurred.
  */
 - (void)setImageWithURLRequest:(NSURLRequest *)urlRequest
-              placeholderImage:(nullable UIImage *)placeholderImage
-                       success:(nullable void (^)(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image))success
-                       failure:(nullable void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error))failure;
+              placeholderImage:(UIImage *)placeholderImage
+                       success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image))success
+                       failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error))failure;
 
 /**
  Cancels any executing image operation for the receiver, if one exists.
@@ -123,13 +122,13 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol AFImageCache <NSObject>
 
 /**
- Returns a cached image for the specified request, if available.
+ Returns a cached image for the specififed request, if available.
 
  @param request The image request.
 
  @return The cached image.
  */
-- (nullable UIImage *)cachedImageForRequest:(NSURLRequest *)request;
+- (UIImage *)cachedImageForRequest:(NSURLRequest *)request;
 
 /**
  Caches a particular image for the specified request.
@@ -140,7 +139,5 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)cacheImage:(UIImage *)image
         forRequest:(NSURLRequest *)request;
 @end
-
-NS_ASSUME_NONNULL_END
 
 #endif
